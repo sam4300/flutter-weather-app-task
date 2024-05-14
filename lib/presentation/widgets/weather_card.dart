@@ -2,15 +2,20 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:weather_app_task/constants/global_variables.dart';
+import 'package:weather_app_task/models/weather_models.dart';
 
 class WeatherCard extends StatelessWidget {
-  const WeatherCard({super.key});
+  final WeatherModel weatherData;
+  const WeatherCard({
+    super.key,
+    required this.weatherData,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 300,
+      height: 350,
       child: Card(
         elevation: 10,
         shape: RoundedRectangleBorder(
@@ -20,38 +25,38 @@ class WeatherCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    'London',
-                    style: TextStyle(
+                    weatherData.locationName,
+                    style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: appColor,
+                      color: AppConstants.appColor,
                     ),
                   ),
                   Text(
-                    '100 K',
-                    style: TextStyle(
+                    '${weatherData.temperature}°C',
+                    style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: appColor,
+                      color: AppConstants.appColor,
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.sunny,
                     size: 60,
-                    color: appColor,
+                    color: AppConstants.appColor,
                   ),
                   Text(
-                    'cloudy',
-                    style: TextStyle(
-                      fontSize: 20,
+                    weatherData.weatherType,
+                    style: const TextStyle(
+                      fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: appColor,
+                      color: AppConstants.appColor,
                     ),
                   )
                 ],

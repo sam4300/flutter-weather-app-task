@@ -65,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: SizedBox(
             width: size.width,
             child: LinearProgressIndicator(
-              color: appColor,
+              color: AppConstants.appColor,
               value: _progress,
             ),
           ),
@@ -106,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   'Skip',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: appColor,
+                    color: AppConstants.appColor,
                     fontSize: 25,
                   ),
                 ),
