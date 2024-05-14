@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:weather_app_task/constants/global_variables.dart';
 import 'package:weather_app_task/presentation/screens/homepage_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -37,8 +38,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> showDelayedScreen() async {
     await Future.delayed(const Duration(seconds: 5));
     if (mounted && !isNavigated) {
-      Navigator.pushAndRemoveUntil(
-          context, HomePageScreen.route, (route) => false);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePageScreen(),
+        ),
+      );
     }
   }
 
@@ -60,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: SizedBox(
             width: size.width,
             child: LinearProgressIndicator(
-              color: const Color.fromARGB(255, 166, 139, 60),
+              color: appColor,
               value: _progress,
             ),
           ),
@@ -90,14 +95,18 @@ class _SplashScreenState extends State<SplashScreen> {
                   setState(() {
                     isNavigated = true;
                   });
-                  Navigator.pushAndRemoveUntil(
-                      context, HomePageScreen.route, (route) => false);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePageScreen(),
+                    ),
+                  );
                 },
                 child: const Text(
                   'Skip',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 166, 139, 60),
+                    color: appColor,
                     fontSize: 25,
                   ),
                 ),
