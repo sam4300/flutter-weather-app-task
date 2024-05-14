@@ -46,10 +46,8 @@ class WeatherCard extends StatelessWidget {
                       color: AppConstants.appColor,
                     ),
                   ),
-                  const Icon(
-                    Icons.sunny,
-                    size: 60,
-                    color: AppConstants.appColor,
+                  Image.network(
+                    'http:${weatherData.icon}',
                   ),
                   Text(
                     weatherData.weatherType,

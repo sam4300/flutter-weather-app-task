@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app_task/bloc/weather_bloc.dart';
 import 'package:weather_app_task/constants/global_variables.dart';
 import 'package:weather_app_task/presentation/screens/splash_screen.dart';
@@ -27,6 +28,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
         );
   }
 
+  void addToLocalStorage() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('query', locationController.text);
+  }
+
   @override
   void dispose() {
     locationController.dispose();
@@ -48,6 +54,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
         ),
         actions: [
           IconButton(
+            color: AppConstants.appColor,
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -107,6 +114,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     ),
                     onPressed: () {
                       AppConstants.query = locationController.text;
+                      addToLocalStorage();
                       fetchData();
                     },
                     child: Text(
