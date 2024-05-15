@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app_task/bloc/weather_bloc.dart';
 import 'package:weather_app_task/constants/global_variables.dart';
+import 'package:weather_app_task/constants/utils.dart';
 import 'package:weather_app_task/presentation/screens/splash_screen.dart';
 import 'package:weather_app_task/presentation/widgets/weather_card.dart';
 
@@ -26,11 +27,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
     context.read<WeatherBloc>().add(
           WeatherDataFetch(),
         );
-  }
-
-  void addToLocalStorage() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('query', locationController.text);
   }
 
   @override
@@ -112,9 +108,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      final prefs = await SharedPreferences.getInstance();
                       AppConstants.query = locationController.text;
-                      addToLocalStorage();
+                      addToLocalStorage(prefs, locationController.text);
                       fetchData();
                     },
                     child: Text(

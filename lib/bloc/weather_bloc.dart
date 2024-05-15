@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app_task/constants/global_variables.dart';
 import 'package:weather_app_task/data/weather_repository.dart';
@@ -29,23 +30,21 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         if (AppConstants.query == '') {
           AppConstants.query = extractCoordinates(position);
         }
-        final weatherdata =
-            await weatherRepository.getWeatherData(AppConstants.query);
+        final weatherdata = await weatherRepository.getWeatherData(Client());
         emit(WeatherSuccess(weatherData: weatherdata));
       } catch (_) {
         emit(
           WeatherFailure(
-            message: 'Sorry cannot fetch data of given location',
+            message: 'Sorry cannot fetch data from given location',
           ),
         );
       }
     });
   }
-}
-
-String extractCoordinates(Position position) {
-  final parts = position.toString().split(',');
-  final latitudePart = parts[0].substring(parts[0].indexOf(':') + 2).trim();
-  final longitudePart = parts[1].substring(parts[1].indexOf(':') + 2).trim();
-  return '$latitudePart,$longitudePart';
+  String extractCoordinates(Position position) {
+    final parts = position.toString().split(',');
+    final latitudePart = parts[0].substring(parts[0].indexOf(':') + 2).trim();
+    final longitudePart = parts[1].substring(parts[1].indexOf(':') + 2).trim();
+    return '$latitudePart,$longitudePart';
+  }
 }

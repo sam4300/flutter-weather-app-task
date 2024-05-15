@@ -11,40 +11,47 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  double _progress = 0.0;
-  Timer? _timer;
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
   bool isNavigated = false;
+
   @override
   void initState() {
-    super.initState();
-    _timer = Timer.periodic(
-      const Duration(milliseconds: 100),
-      (_) {
-        if (mounted) {
-          setState(() {
-            _progress += 0.02;
-            if (_progress >= 1.0) {
-              _timer?.cancel();
-            }
-          });
-        }
-      },
-    );
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..addListener(() {
+        setState(() {});
+      });
+    controller.forward();
 
     showDelayedScreen();
+    super.initState();
   }
 
-  Future<void> showDelayedScreen() async {
-    await Future.delayed(const Duration(seconds: 5));
-    if (mounted && !isNavigated) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomePageScreen(),
-        ),
-      );
-    }
+  @override
+  void dispose() {
+    controller.dispose();
+    controller.removeListener(() {});
+    super.dispose();
+  }
+
+  void showDelayedScreen() {
+    if (isNavigated) return;
+
+    Future.delayed(const Duration(seconds: 5)).then((value) {
+      if (mounted && !isNavigated) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePageScreen(),
+          ),
+        );
+      }
+    });
+
+    isNavigated = false;
   }
 
   @override
@@ -66,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
             width: size.width,
             child: LinearProgressIndicator(
               color: AppConstants.appColor,
-              value: _progress,
+              value: controller.value,
             ),
           ),
         ),
