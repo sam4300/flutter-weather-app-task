@@ -2,6 +2,19 @@
 
 A simple flutter application to show the temperature, and current weather condition of current location or desired location.
 
+## packages and plug-ins used
+
+-BLOC package for state management
+-http package for api calls
+-shared preferences for local storage
+-mocktail for testing
+
+## features
+
+- show current location weather condition and temperature
+- show desired location weather condition and temperature
+- persists added location for next launch
+
 ## Getting Started
 
 you can follow given steps to run this app in your system
@@ -15,23 +28,19 @@ An IDE with Flutter plugins (optional, but recommended): Popular options include
 
 Clone the repository:
 Bash
-git clone https://github.com/your-username/your-project-name.git
-Use code with caution.
-content_copy
+git clone https://github.com/sam4300/flutter-weather-app-task.git
 Navigate to the project directory:
-Bash
-cd your-project-name
-Use code with caution.
-content_copy
-Install dependencies:
-Bash
+bash
+cd weather-app-task
+code .
 flutter pub get
-Use code with caution.
-content_copy
+
+## completing above steps will make sure your app is ready to launch
 
 ### Running the App
 
 Connect a physical device or start an emulator.
 Run the app in debug mode:
-Bash
 flutter run
+
+## app will be installed and you are ready to go
